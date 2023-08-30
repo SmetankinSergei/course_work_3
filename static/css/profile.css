@@ -1,0 +1,52 @@
+body {
+
+	font-size: 24px;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+}
+
+.username {
+    padding-bottom: 10px;
+}
+
+.user_info {
+    display: flex;
+	justify-content: space-between;
+	font-size: 14px;
+}
+
+.info_link {
+    margin-top: 10px;
+    text-align: center;
+}
+
+a:link, a:active, a:visited {
+    color: #000000;
+}
+
+.amount {
+    font-size: 24px;
+}
+
+.user_photo {
+    border-radius: 32px;
+    margin-bottom: 10px;
+}
+
+.posts {
+    display: flex;
+    flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.post {
+    margin: 4px;
+    width: 31%;
+    height: 31%;
+    background: #fff123
+}
+
+.post_photo {
+    width: 100%;
+    height: width;
+}

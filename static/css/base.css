@@ -1,0 +1,8 @@
+body, footer {
+    margin:0 auto;
+    max-width: 412px;
+}
+
+body {
+    padding: 10px;
+}

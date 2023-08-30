@@ -1,0 +1,30 @@
+.correction {
+    height: 50px;
+}
+
+footer {
+    margin-bottom: -2px;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    left: auto;
+    bottom: 0px;
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    background: #ffffff;
+}
+
+.footer_icon {
+    margin: 12px;
+    margin-left: 0;
+    width: 25px;
+    height: 25px;
+}
+
+.footer_profile_photo {
+    margin-top: 5px;
+    margin-right: 22px;
+    width: 40px;
+    border-radius: 20px;
+}

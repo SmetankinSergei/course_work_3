@@ -1,0 +1,16 @@
+{% extends 'authorized_base.html' %}
+
+{% block body %}
+{% for post in posts %}
+<img src="post.img" alt="post.alt"/>
+<div>
+    <p>Description</p>
+    <div>
+        <a>Comments</a>
+        <p>views amount</p> + before icon
+        <a>More info</a> + mark icon
+        <hr>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
