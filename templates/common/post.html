@@ -1,2 +1,34 @@
 {% extends 'authorized_base.html' %}
 
+{% block body %}
+<div>
+    <img class="user_photo" src="static/img/icon.jpg" alt="user_photo" width="64"/>
+    <p>Username</p>
+</div>
+
+<div>
+    <img class="post_photo" src="post.img" alt="post.alt"/>
+    <p>post.full_text</p>
+    <hr>
+</div>
+
+<div>
+    <a>Comments</a>
+    <p>views amount</p> + before icon
+    {% for comment in range(4) %} or while or less 4
+        <div>
+            user# comment
+        </div>
+    {% endfor %}
+    <hr>
+</div>
+
+<div>
+    <form>
+        <textarea rows="1" cols="50" placeholder="username"></textarea>
+        <textarea rows="5" cols="50" placeholder="comment"></textarea>
+        <button type="submit">send</button>
+        mark label
+    </form>
+</div>
+{% endblock %}

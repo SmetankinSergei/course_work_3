@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block footer %}
-<link rel="stylesheet" href="static/css/authorized_base.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/authorized_base.css') }}">
 
 <footer>
     <a href="/exit"><img class="footer_icon" src="static/img/footer/exit_icon.svg"></a>

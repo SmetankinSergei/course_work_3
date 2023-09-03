@@ -28,3 +28,7 @@ footer {
     width: 40px;
     border-radius: 20px;
 }
+
+.user_photo {
+    border-radius: 32px;
+}

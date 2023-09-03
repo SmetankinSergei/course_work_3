@@ -1,5 +1,4 @@
 body {
-
 	font-size: 24px;
 	font-weight: 600;
 	font-family: "Open Sans", sans-serif;
@@ -29,7 +28,6 @@ a:link, a:active, a:visited {
 }
 
 .user_photo {
-    border-radius: 32px;
     margin-bottom: 10px;
 }
 
@@ -43,7 +41,6 @@ a:link, a:active, a:visited {
     margin: 4px;
     width: 31%;
     height: 31%;
-    background: #fff123
 }
 
 .post_photo {
