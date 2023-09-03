@@ -1,10 +1,17 @@
+import datetime
+
+
 class Post:
     def __init__(self, post_image, caption, full_text):
         self.__post_image = post_image
         self.__caption = caption
         self.__full_text = full_text
+        self.__post_date = datetime.datetime.now()
         self.__likes = []  # users names list
-        self.__post_date = None
+
+    def get_post_data(self):
+        return {'img': self.__post_image, 'caption': self.__caption, 'full_text': self.__full_text,
+                'date': self.__post_date.strftime('%d/%m/%Y'), 'likes': self.__likes}
 
     def set_image(self, path):
         self.__post_image = path

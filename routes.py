@@ -1,13 +1,16 @@
-from flask import render_template, url_for
+import json
 
-from data_test import send_post, create_user
+from flask import render_template
+
+from data_test import send_post, load_image, get_all_posts
 from main import app
 from post import Post
 
 
 @app.route('/')
 def start():
-    send_post('Kris', 'atata')
+    # new_post = Post(load_image(), 'new photo', 'new post and photo')
+    # send_post('Kris', new_post)
     return render_template('common/news_line.html')
 
 
@@ -18,7 +21,12 @@ def create_account():
 
 @app.route('/news_line')
 def news_line():
-    return render_template('common/news_line.html')
+    posts = get_all_posts()
+    images = []
+    for post in posts:
+        images.append(post['img'])
+        print(post['img'])
+    return render_template('common/news_line.html', images=images)
 
 
 @app.route('/post')

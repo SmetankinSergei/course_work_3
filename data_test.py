@@ -1,13 +1,11 @@
 import json
+import random
 
 from database import User, db
-from sqlalchemy import update
-from flask_sqlalchemy import SQLAlchemy
 
 
 def create_user():
     user = User(username='Kris', password='123')
-    print(user.username)
     try:
         db.session.add(user)
         db.session.commit()
@@ -23,13 +21,12 @@ def send_post(username, post):
     user = User.query.filter_by(username=username).first()
     if posts is not None:
         posts = json.loads(posts)
-        post_number = len(posts.keys()) + 1
+        post_number = max(list(map(lambda key: int(key), posts.keys()))) + 1
     else:
         post_number = 1
         posts = {}
-    posts[post_number] = post
-    posts = json.dumps(posts)
-    user.posts = posts
+    posts[post_number] = post.get_post_data()
+    user.posts = json.dumps(posts)
     db.session.commit()
 
 
@@ -39,3 +36,25 @@ def add_follower(user, follower):
 
 def add_subscription(user, subscription):
     pass
+
+
+def load_image():
+    """
+    image loading imitation, return path - link imitation
+    """
+    num = random.randint(1, 25)
+    return f'simple_server/img/{num}.jpg'
+
+
+def get_all_posts():
+    users = User.query.all()
+    posts = []
+    for user in users:
+        user_posts = user.posts
+        if user_posts is not None:
+            user_posts = json.loads(user_posts)
+            user_posts = user_posts.values()
+            for user_post in user_posts:
+                posts.append(user_post)
+    print(posts)
+    return posts
