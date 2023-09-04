@@ -5,7 +5,7 @@ from database import User, db
 
 
 def create_user():
-    user = User(username='Kris', password='123')
+    user = User(username='Stefan', password='123', user_photo='simple_server/users_photos/default_photo.jpg')
     try:
         db.session.add(user)
         db.session.commit()
@@ -55,6 +55,7 @@ def get_all_posts():
             user_posts = json.loads(user_posts)
             user_posts = user_posts.values()
             for user_post in user_posts:
+                user_post['username'] = user.username
+                user_post['user_photo'] = user.user_photo
                 posts.append(user_post)
-    print(posts)
     return posts

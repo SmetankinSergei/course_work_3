@@ -11,6 +11,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(30), nullable=False)
     password = db.Column(db.String(30), nullable=False)
+    user_photo = db.Column(db.Text, nullable=False)
     posts = db.Column(db.Text)
     followers = db.Column(db.Text)
     subscriptions = db.Column(db.Text)

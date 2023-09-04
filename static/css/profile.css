@@ -34,7 +34,7 @@ a:link, a:active, a:visited {
 .posts {
     display: flex;
     flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: space-right;
 }
 
 .post {

@@ -2,9 +2,18 @@
 
 {% block body %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/news_line.css') }}">
-<div>
-    {% for image in images %}
-    <img class="news_line_post_img" src="{{ url_for('static', filename=image) }}"/>
+<div class="news_line_post">
+    {% for post in posts %}
+    <div class="user_info">
+        <a href="/profile/{{ post['username'] }}"><img class="profile_photo" src="{{ url_for('static', filename=post['user_photo']) }}"/></a>
+        <p class="username">{{ post['username'] }}</p>
+    </div>
+    <img class="news_line_post_img" src="{{ url_for('static', filename=post['img']) }}"/>
+    <p>{{ post['caption'] }}</p>
+    <p>{{ post['full_text'] }}</p>
+    <p>{{ post['date'] }}</p>
+    <hr>
+    <br>
     {% endfor %}
 </div>
 {% endblock %}
