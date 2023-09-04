@@ -14,7 +14,7 @@ def create_user():
 
 
 def send_post(username, post):
-    # user = User.query.filter_by(username=username).first()
+    # user = User.query.filter_by(username='Stefan').first()
     # user.posts = None
     # db.session.commit()
     posts = User.query.filter_by(username=username).first().posts

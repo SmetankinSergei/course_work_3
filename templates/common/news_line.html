@@ -9,9 +9,17 @@
         <p class="username">{{ post['username'] }}</p>
     </div>
     <img class="news_line_post_img" src="{{ url_for('static', filename=post['img']) }}"/>
-    <p>{{ post['caption'] }}</p>
+    <div class="post_description">
+        <p>{{ post['caption'] }}</p>
+        <div class="date_and_likes">
+            <div class="likes">
+                <img src="{{ url_for('static', filename='img/like_empty.svg') }}" alt="like" width="34">
+                <p>amount</p>
+            </div>
+            <p>{{ post['date'] }}</p>
+        </div>
+    </div>
     <p>{{ post['full_text'] }}</p>
-    <p>{{ post['date'] }}</p>
     <hr>
     <br>
     {% endfor %}

@@ -1,16 +1,19 @@
 {% extends 'authorized_base.html' %}
 
 {% block body %}
-{% for post in posts %}
-<img src="post.img" alt="post.alt"/>
-<div>
-    <p>Description</p>
+<img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
+{% if posts != 0 %}
+    {% for post in posts %}
+    <img src="{{ url_for('static', filename=post['img']) }}" alt="post.alt"/>
     <div>
-        <a>Comments</a>
-        <p>views amount</p> + before icon
-        <a>More info</a> + mark icon
-        <hr>
+        <p>Description</p>
+        <div>
+            <a>Comments</a>
+            <p>views amount</p> + before icon
+            <a>More info</a> + mark icon
+            <hr>
+        </div>
     </div>
-</div>
-{% endfor %}
+    {% endfor %}
+{% endif %}
 {% endblock %}
