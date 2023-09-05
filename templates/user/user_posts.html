@@ -1,17 +1,25 @@
 {% extends 'authorized_base.html' %}
 
 {% block body %}
-<img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user_posts.css') }}">
+
+<a class="back_to_profile" href="/profile/{{ username }}">
+    <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
+    <p>back to profile {{ username }}</p>
+</a>
+
 {% if posts != 0 %}
     {% for post in posts %}
-    <img src="{{ url_for('static', filename=post['img']) }}" alt="post.alt"/>
-    <div>
-        <p>Description</p>
+    <div class="post">
+        <img class="post_img" src="{{ url_for('static', filename=post['img']) }}" alt="post.alt"/>
         <div>
-            <a>Comments</a>
-            <p>views amount</p> + before icon
-            <a>More info</a> + mark icon
-            <hr>
+            <p>Description</p>
+            <div>
+                <a>Comments</a>
+                <p>views amount</p> + before icon
+                <a>More info</a> + mark icon
+                <hr>
+            </div>
         </div>
     </div>
     {% endfor %}

@@ -1,0 +1,30 @@
+.start_icon {
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.auth_form {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+
+}
+
+.auth_form input, button {
+    width: 80%;
+    height: 40px;
+    padding: auto;
+    margin-bottom: 10px;
+    font-size: 20px;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+	border-radius: 8px;
+}
+
+.auth_form input {
+    background: #e7e7e7
+}
+
+.auth_form button {
+    background: #ffe3cd
+}

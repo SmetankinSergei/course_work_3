@@ -12,7 +12,7 @@ from post import Post
 def start():
     # new_post = Post(load_image(), 'new photo', 'new post and photo')
     # send_post('Alina', new_post)
-    return render_template('common/news_line.html')
+    return render_template('common/authorization.html')
 
 
 @app.route('/create_account')

@@ -19,10 +19,6 @@ body {
     text-align: center;
 }
 
-a:link, a:active, a:visited {
-    color: #000000;
-}
-
 .amount {
     font-size: 24px;
 }

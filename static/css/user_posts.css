@@ -1,0 +1,25 @@
+ .post {
+    margin-top: 10px;
+ }
+
+ .post_img {
+    margin: 0, 10px, 0, 10px;
+    padding-bottom: 10px;
+    width: 100%;
+}
+
+.back_to_profile {
+    display: flex;
+    justify-content: space-right;
+    font-size: 24px;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+}
+
+.back_to_profile img {
+    margin-right: 10px;
+}
+
+.back_to_profile p {
+    margin-top: 7px;
+}
