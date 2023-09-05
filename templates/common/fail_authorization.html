@@ -1,0 +1,6 @@
+{% extends 'common/authorization.html' %}
+
+{% block error %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/common/fail_authorization.css') }}">
+<p class="error_message">incorrect login or password</p>
+{% endblock %}

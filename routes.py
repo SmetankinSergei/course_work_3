@@ -1,18 +1,39 @@
 import json
 
-from flask import render_template
+from flask import render_template, request
 
+import main
+from checks import check_auth_data, check_reg_data
 from data_test import send_post, load_image, get_all_posts, create_user
 from database import User
 from main import app
-from post import Post
 
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def start():
-    # new_post = Post(load_image(), 'new photo', 'new post and photo')
-    # send_post('Alina', new_post)
-    return render_template('common/authorization.html')
+    if request.method == 'POST':
+        login = request.form.get('login')
+        password = request.form.get('password')
+        if request.form.get('authorization') == 'authorization':
+            if check_auth_data(login, password):
+                user = User.query.filter_by(username=login).first()
+                main.current_user = user
+                # if user.posts is not None:
+                #     posts_amount = len(json.loads(user.posts).keys())
+                print('auth done!')
+                return render_template('user/my_profile.html', user=user)
+            else:
+                return render_template('common/fail_authorization.html')
+        elif request.form.get('registration') == 'registration':
+            if check_reg_data(login, password):
+                create_user(login, password)
+                user = User.query.filter_by(username=login).first()
+                main.current_user = user
+                return render_template('user/my_profile.html', user=user)
+            else:
+                return render_template('common/fail_authorization.html')
+    else:
+        return render_template('common/authorization.html')
 
 
 @app.route('/create_account')

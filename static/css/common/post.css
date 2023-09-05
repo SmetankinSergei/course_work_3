@@ -1,0 +1,16 @@
+.back_to_profile {
+    display: flex;
+    justify-content: space-right;
+    font-size: 24px;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+	margin-bottom: 10px;
+}
+
+.back_to_profile img {
+    margin-right: 10px;
+}
+
+.back_to_profile p {
+    margin-top: 7px;
+}

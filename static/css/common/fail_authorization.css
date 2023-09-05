@@ -1,0 +1,8 @@
+.error_message {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 20px;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+	color: red;
+}

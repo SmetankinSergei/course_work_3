@@ -1,10 +1,11 @@
 body, footer {
-    margin:0 auto;
+    margin: 0 auto;
     max-width: 412px;
 }
 
 body {
     padding: 10px;
+    background: #f3f3f3;
 }
 
 a:link, a:active, a:visited {

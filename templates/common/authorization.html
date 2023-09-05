@@ -1,14 +1,16 @@
 {% extends 'base.html' %}
 
 {% block body %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/authorization.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/common/authorization.css') }}">
 
 <img class="start_icon" src="{{ url_for('static', filename='img/icon.jpg') }}" alt="start_icon"/>
 
-<form class="auth_form">
-    <input type="text" placeholder="login">
-    <input type="password" placeholder="password">
-    <button type="submit" name="authorization">authorization</button>
-    <button type="submit" name="registration">registration</button>
+<form class="auth_form" method="post">
+    <input type="text" name="login" placeholder="login">
+    <input type="password" name="password" placeholder="password">
+    <button type="submit" name="authorization" value="authorization">authorization</button>
+    <button type="submit" name="registration" value="registration">registration</button>
 </form>
+
+{% block error %}{% endblock %}
 {% endblock %}

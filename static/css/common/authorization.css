@@ -1,6 +1,7 @@
 .start_icon {
     width: 100%;
     margin-bottom: 50px;
+    border-radius: 8px;
 }
 
 .auth_form {
@@ -22,6 +23,7 @@
 }
 
 .auth_form input {
+    padding-left: 10px;
     background: #e7e7e7
 }
 

@@ -1,7 +1,7 @@
 {% extends 'authorized_base.html' %}
 
 {% block body %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/user_posts.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user/user_posts.css') }}">
 
 <a class="back_to_profile" href="/profile/{{ username }}">
     <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>

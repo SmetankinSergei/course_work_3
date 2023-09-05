@@ -4,8 +4,8 @@ import random
 from database import User, db
 
 
-def create_user():
-    user = User(username='Stefan', password='123', user_photo='simple_server/users_photos/default_photo.jpg')
+def create_user(login, password):
+    user = User(username=login, password=password, user_photo='simple_server/users_photos/default_photo.jpg')
     try:
         db.session.add(user)
         db.session.commit()
@@ -59,3 +59,7 @@ def get_all_posts():
                 user_post['user_photo'] = user.user_photo
                 posts.append(user_post)
     return posts
+
+
+    # new_post = Post(load_image(), 'new photo', 'new post and photo')
+    # send_post('Alina', new_post)
