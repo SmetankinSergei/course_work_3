@@ -61,5 +61,14 @@ def get_all_posts():
     return posts
 
 
+def prepare_user_posts(user):
+    if user.posts is None:
+        posts_amount = 0
+    else:
+        posts = json.loads(user.posts)
+        posts_amount = len(posts.keys())
+        user.posts = posts.values()
+    return posts_amount
+
     # new_post = Post(load_image(), 'new photo', 'new post and photo')
     # send_post('Alina', new_post)

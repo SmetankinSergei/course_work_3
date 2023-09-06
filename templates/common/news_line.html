@@ -5,7 +5,9 @@
 <div class="news_line_post">
     {% for post in posts %}
     <div class="user_info">
-        <a href="/profile/{{ post['username'] }}"><img class="profile_photo" src="{{ url_for('static', filename=post['user_photo']) }}"/></a>
+        <a href="/profile/{{ post['username'] }}">
+            <img class="profile_photo" src="{{ url_for('static', filename=post['user_photo']) }}"/>
+        </a>
         <p class="username">{{ post['username'] }}</p>
     </div>
     <img class="news_line_post_img" src="{{ url_for('static', filename=post['img']) }}"/>

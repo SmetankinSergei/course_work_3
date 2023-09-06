@@ -1,1 +1,52 @@
 {% extends 'authorized_base.html' %}
+
+{% block title %}My profile{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user/my_profile.css') }}">
+
+<div class="username">
+    <h1>My profile</h1>
+</div>
+<div class="my_info">
+    <img class="user_photo" src="{{ url_for('static', filename=user.user_photo) }}" alt="user_photo" width="64"/>
+    <p class="my_name">{{ user.username }}</p>
+</div>
+
+<div class="my_lists">
+    <a class="info_link" href="/user_posts/{{ user.username }}">
+        <div>
+            <div class="amount">{{ posts_amount }}</div>
+            <div>Posts</div>
+        </div>
+    </a>
+    <a class="info_link" href="/followers">
+        <div>
+            <div class="amount">0</div>
+            <div>Followers</div>
+        </div>
+    </a>
+    <a class="info_link" href="/subscriptions">
+        <div>
+            <div class="amount">0</div>
+            <div>Subscriptions</div>
+        </div>
+    </a>
+</div>
+
+<a href="/edit_profile">
+    <button class="edit_profile_btn" type="submit">Edit profile</button>
+</a>
+
+<div class="posts">
+    {% if posts_amount > 0 %}
+        {% for post in user.posts %}
+        <div class="post">
+            <a href="/post">
+                <img class="post_photo" src="{{ url_for('static', filename=post['img']) }}" alt="user_post_photo"/>
+            </a>
+        </div>
+        {% endfor %}
+    {% endif %}
+</div>
+{% endblock %}
