@@ -1,0 +1,25 @@
+{% extends 'authorized_base.html' %}
+
+{% block title %}{{ list_name }}{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user/users_list.css') }}">
+
+<a class="back_to_profile" href="/profile/{{ profile_holder.username }}">
+    <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
+    <p>back to profile</p>
+</a>
+
+<p class="list_name">{{ list_name }}</p>
+
+<div class="users_list">
+    {% for user in users %}
+        <a href="/profile/{{ user.username }}">
+            <div class="list_item">
+                <img src="{{ url_for('static', filename=user.user_photo) }}"/>
+                <p>{{ user.username }}</p>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+{% endblock %}

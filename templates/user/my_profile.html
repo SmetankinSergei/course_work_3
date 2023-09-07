@@ -20,13 +20,13 @@
             <div>Posts</div>
         </div>
     </a>
-    <a class="info_link" href="/followers">
+    <a class="info_link" href="/users_list/{{ 'Followers' }}/{{ profile_holder.username }}">
         <div>
             <div class="amount">{{ user_links['followers_amount'] }}</div>
             <div>Followers</div>
         </div>
     </a>
-    <a class="info_link" href="/subscriptions">
+    <a class="info_link" href="/users_list/{{ 'Subscriptions' }}/{{ profile_holder.username }}">
         <div>
             <div class="amount">{{ user_links['subscriptions_amount'] }}</div>
             <div>Subscriptions</div>

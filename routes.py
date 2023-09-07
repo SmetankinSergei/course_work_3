@@ -11,7 +11,6 @@ from main import app
 
 @app.route('/', methods=['GET', 'POST'])
 def start():
-    # main.current_user = User.query.filter_by(username='Kris').first()
     if request.method == 'POST':
         login = request.form.get('login')
         password = request.form.get('password')
@@ -20,7 +19,8 @@ def start():
                 user = User.query.filter_by(username=login).first()
                 main.current_user = user
                 user_links = prepare_user_posts(user)
-                return render_template('user/my_profile.html', user=user, user_links=user_links)
+                return render_template('user/my_profile.html', user=user, user_links=user_links,
+                                       profile_holder=main.current_user)
             else:
                 return render_template('common/fail_authorization.html')
         elif request.form.get('registration') == 'registration':
@@ -29,7 +29,8 @@ def start():
                 user = User.query.filter_by(username=login).first()
                 main.current_user = user
                 user_links = prepare_user_posts(user)
-                return render_template('user/my_profile.html', user=user, user_links=user_links)
+                return render_template('user/my_profile.html', user=user, user_links=user_links,
+                                       profile_holder=main.current_user)
             else:
                 return render_template('common/fail_authorization.html')
     else:
@@ -39,7 +40,22 @@ def start():
 @app.route('/my_profile')
 def my_profile():
     user_links = prepare_user_posts(User.query.filter_by(username=main.current_user.username).first())
-    return render_template('user/my_profile.html', user=main.current_user, user_links=user_links)
+    return render_template('user/my_profile.html', user=main.current_user, user_links=user_links,
+                           profile_holder=main.current_user)
+
+
+@app.route('/users_list/<string:list_name>/<string:username>')
+def users_list(list_name, username):
+    user = User.query.filter_by(username=username).first()
+    users = []
+    if list_name == 'Followers':
+        for username in user.followers.split('&')[:-1]:
+            users.append(User.query.filter_by(username=username).first())
+    elif list_name == 'Subscriptions':
+        for username in user.subscriptions.split('&')[:-1]:
+            users.append(User.query.filter_by(username=username).first())
+    return render_template('user/users_list.html', list_name=list_name, user=main.current_user, profile_holder=user,
+                           users=users)
 
 
 @app.route('/edit_profile')

@@ -1,0 +1,50 @@
+.back_to_profile {
+    display: flex;
+    justify-content: space-right;
+    font-size: 24px;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+}
+
+.back_to_profile img {
+    margin-right: 10px;
+}
+
+.back_to_profile p {
+    margin-top: 7px;
+}
+
+.list_name {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 24px;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+}
+
+.users_list {
+    display: flex;
+    flex-direction: column;
+}
+
+.list_item {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-right;
+}
+
+.list_item img {
+    margin-bottom: 10px;
+    width: 64px;
+    height: 64px;
+    border-radius: 32px;
+}
+
+.list_item p {
+    font-size: 24px;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+	margin-top:18px;
+	margin-left: 10px;
+}
