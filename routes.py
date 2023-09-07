@@ -3,8 +3,8 @@ import json
 from flask import render_template, request
 
 import main
+from utils import get_all_posts, create_user, prepare_user_posts, subscribe_on_someone
 from checks import check_auth_data, check_reg_data
-from data_test import get_all_posts, create_user, prepare_user_posts
 from database import User
 from main import app
 
@@ -37,19 +37,25 @@ def start():
 
 @app.route('/my_profile')
 def my_profile():
-    #print(main.current_user.username, 'atatat!!!')
-    posts_amount = len(main.current_user.posts)
-    return render_template('user/my_profile.html', user=main.current_user, posts_amount=posts_amount)
+    return render_template('user/my_profile.html', user=main.current_user, posts_amount=len(main.current_user.posts))
 
 
 @app.route('/edit_profile')
 def edit_profile():
-    return render_template('user/edit_profile.html')
+    return render_template('user/edit_profile.html', user=main.current_user)
+
+
+@app.route('/subscribe/<string:username>')
+def subscribe(username):
+    subscribe_on_someone(username, main.current_user.username)
+    user = User.query.filter_by(username=username).first()
+    posts_amount = prepare_user_posts(user)
+    return render_template('user/profile.html', user=main.current_user, profile_holder=user, posts_amount=posts_amount)
 
 
 @app.route('/news_line')
 def news_line():
-    return render_template('common/news_line.html', posts=get_all_posts())
+    return render_template('common/news_line.html', user=main.current_user, posts=get_all_posts())
 
 
 @app.route('/post')
@@ -69,14 +75,16 @@ def user_posts(username):
         posts = json.loads(posts).values()
     else:
         posts = 0
-    return render_template('user/user_posts.html', username=username, posts=posts)
+    return render_template('user/user_posts.html', user=main.current_user, username=username, posts=posts)
 
 
 @app.route('/profile/<string:username>')
 def profile(username):
     user = User.query.filter_by(username=username).first()
     posts_amount = prepare_user_posts(user)
-    if user.username == main.current_user.username:
-        return render_template('user/my_profile.html', user=user, posts_amount=posts_amount)
+    if username == main.current_user.username:
+        return render_template('user/my_profile.html', user=main.current_user,
+                               profile_holder=user, posts_amount=posts_amount)
     else:
-        return render_template('user/profile.html', user=user, posts_amount=posts_amount)
+        return render_template('user/profile.html', user=main.current_user,
+                               profile_holder=user, posts_amount=posts_amount)

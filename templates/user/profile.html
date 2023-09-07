@@ -1,16 +1,17 @@
 {% extends 'authorized_base.html' %}
 
-{% block title %}Profile {{ user.username }}{% endblock %}
+{% block title %}Profile {{ profile_holder.username }}{% endblock %}
+
 {% block body %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/user/profile.css') }}">
 
 <div class="username">
-    <h1>{{ user.username }}</h1>
+    <h1>{{ profile_holder.username }}</h1>
 </div>
 
 <div class="user_info">
-    <img class="user_photo" src="{{ url_for('static', filename=user.user_photo) }}" alt="user_photo" width="64"/>
-    <a class="info_link" href="/user_posts/{{ user.username }}">
+    <img class="user_photo" src="{{ url_for('static', filename=profile_holder.user_photo) }}" alt="user_photo" width="64"/>
+    <a class="info_link" href="/user_posts/{{ profile_holder.username }}">
         <div>
             <div class="amount">{{ posts_amount }}</div>
             <div>Posts</div>
@@ -30,9 +31,17 @@
     </a>
 </div>
 
+<a href="/subscribe/{{ profile_holder.username }}">
+    {% if profile_holder.username not in user.subscriptions %}
+        <button class="subscribe_btn" type="submit">Subscribe</button>
+    {% else %}
+        <button class="unsubscribe_btn" type="submit">Unsubscribe</button>
+    {% endif %}
+</a>
+
 <div class="posts">
     {% if posts_amount > 0 %}
-        {% for post in user.posts %}
+        {% for post in profile_holder.posts %}
         <div class="post">
             <a href="/post">
                 <img class="post_photo" src="{{ url_for('static', filename=post['img']) }}" alt="user_post_photo"/>

@@ -1,22 +1,22 @@
 import json
 import random
 
+import main
 from database import User, db
 
 
 def create_user(login, password):
-    user = User(username=login, password=password, user_photo='simple_server/users_photos/default_photo.jpg')
+    user = User(username=login, password=password, user_photo='simple_server/users_photos/default_photo.jpg',
+                followers='', subscriptions='')
     try:
         db.session.add(user)
         db.session.commit()
     except:
+        db.session.rollback()
         print('Saving data error')
 
 
 def send_post(username, post):
-    # user = User.query.filter_by(username='Stefan').first()
-    # user.posts = None
-    # db.session.commit()
     posts = User.query.filter_by(username=username).first().posts
     user = User.query.filter_by(username=username).first()
     if posts is not None:
@@ -30,19 +30,11 @@ def send_post(username, post):
     db.session.commit()
 
 
-def add_follower(user, follower):
-    pass
-
-
-def add_subscription(user, subscription):
-    pass
-
-
 def load_image():
     """
     image loading imitation, return path - link imitation
     """
-    num = random.randint(1, 25)
+    num = random.randint(1, 41)
     return f'simple_server/img/{num}.jpg'
 
 
@@ -70,5 +62,19 @@ def prepare_user_posts(user):
         user.posts = posts.values()
     return posts_amount
 
-    # new_post = Post(load_image(), 'new photo', 'new post and photo')
-    # send_post('Alina', new_post)
+
+def subscribe_on_someone(user_name, follower_name):
+    user = User.query.filter_by(username=follower_name).first()
+    user.subscriptions += user_name + '&'
+    main.current_user.subscriptions = user.subscriptions
+    user = User.query.filter_by(username=user_name).first()
+    user.followers += follower_name + '&'
+    db.session.commit()
+
+
+# new_post = Post(load_image(), 'new photo', 'new post and photo')
+# send_post('Alina', new_post)
+
+# user = User.query.filter_by(username='Stefan').first()
+# user.posts = None
+# db.session.commit()

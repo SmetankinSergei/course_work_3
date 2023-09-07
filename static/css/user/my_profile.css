@@ -60,3 +60,8 @@
     width: 100%;
     height: width;
 }
+
+.user_photo {
+    width: 64px;
+    height: 64px;
+}
