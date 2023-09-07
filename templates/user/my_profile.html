@@ -16,19 +16,19 @@
 <div class="my_lists">
     <a class="info_link" href="/user_posts/{{ user.username }}">
         <div>
-            <div class="amount">{{ posts_amount }}</div>
+            <div class="amount">{{ user_links['posts_amount'] }}</div>
             <div>Posts</div>
         </div>
     </a>
     <a class="info_link" href="/followers">
         <div>
-            <div class="amount">0</div>
+            <div class="amount">{{ user_links['followers_amount'] }}</div>
             <div>Followers</div>
         </div>
     </a>
     <a class="info_link" href="/subscriptions">
         <div>
-            <div class="amount">0</div>
+            <div class="amount">{{ user_links['subscriptions_amount'] }}</div>
             <div>Subscriptions</div>
         </div>
     </a>
@@ -39,7 +39,7 @@
 </a>
 
 <div class="posts">
-    {% if posts_amount > 0 %}
+    {% if user_links['posts_amount'] > 0 %}
         {% for post in user.posts %}
         <div class="post">
             <a href="/post">

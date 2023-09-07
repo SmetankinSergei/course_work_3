@@ -11,6 +11,7 @@ from main import app
 
 @app.route('/', methods=['GET', 'POST'])
 def start():
+    # main.current_user = User.query.filter_by(username='Kris').first()
     if request.method == 'POST':
         login = request.form.get('login')
         password = request.form.get('password')
@@ -18,8 +19,8 @@ def start():
             if check_auth_data(login, password):
                 user = User.query.filter_by(username=login).first()
                 main.current_user = user
-                posts_amount = prepare_user_posts(user)
-                return render_template('user/my_profile.html', user=user, posts_amount=posts_amount)
+                user_links = prepare_user_posts(user)
+                return render_template('user/my_profile.html', user=user, user_links=user_links)
             else:
                 return render_template('common/fail_authorization.html')
         elif request.form.get('registration') == 'registration':
@@ -27,8 +28,8 @@ def start():
                 create_user(login, password)
                 user = User.query.filter_by(username=login).first()
                 main.current_user = user
-                posts_amount = prepare_user_posts(user)
-                return render_template('user/my_profile.html', user=user, posts_amount=posts_amount)
+                user_links = prepare_user_posts(user)
+                return render_template('user/my_profile.html', user=user, user_links=user_links)
             else:
                 return render_template('common/fail_authorization.html')
     else:
@@ -37,7 +38,8 @@ def start():
 
 @app.route('/my_profile')
 def my_profile():
-    return render_template('user/my_profile.html', user=main.current_user, posts_amount=len(main.current_user.posts))
+    user_links = prepare_user_posts(User.query.filter_by(username=main.current_user.username).first())
+    return render_template('user/my_profile.html', user=main.current_user, user_links=user_links)
 
 
 @app.route('/edit_profile')
@@ -45,12 +47,12 @@ def edit_profile():
     return render_template('user/edit_profile.html', user=main.current_user)
 
 
-@app.route('/subscribe/<string:username>')
+@app.route('/subscribe/<string:username>', methods=['GET', 'POST'])
 def subscribe(username):
     subscribe_on_someone(username, main.current_user.username)
     user = User.query.filter_by(username=username).first()
-    posts_amount = prepare_user_posts(user)
-    return render_template('user/profile.html', user=main.current_user, profile_holder=user, posts_amount=posts_amount)
+    user_links = prepare_user_posts(user)
+    return render_template('user/profile.html', user=main.current_user, profile_holder=user, user_links=user_links)
 
 
 @app.route('/news_line')
@@ -80,11 +82,12 @@ def user_posts(username):
 
 @app.route('/profile/<string:username>')
 def profile(username):
-    user = User.query.filter_by(username=username).first()
-    posts_amount = prepare_user_posts(user)
+    profile_holder = User.query.filter_by(username=username).first()
+    user_links = prepare_user_posts(profile_holder)
     if username == main.current_user.username:
         return render_template('user/my_profile.html', user=main.current_user,
-                               profile_holder=user, posts_amount=posts_amount)
+                               profile_holder=profile_holder, user_links=user_links)
     else:
+        print(user_links)
         return render_template('user/profile.html', user=main.current_user,
-                               profile_holder=user, posts_amount=posts_amount)
+                               profile_holder=profile_holder, user_links=user_links)

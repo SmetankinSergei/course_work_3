@@ -60,15 +60,30 @@ def prepare_user_posts(user):
         posts = json.loads(user.posts)
         posts_amount = len(posts.keys())
         user.posts = posts.values()
-    return posts_amount
+    if user.followers == '':
+        followers_amount = 0
+    else:
+        followers_amount = len(user.followers.split('&')) - 1
+    if user.subscriptions == '':
+        subs_amount = 0
+    else:
+        subs_amount = len(user.subscriptions.split('&')) - 1
+    return {'posts_amount': posts_amount, 'followers_amount': followers_amount, 'subscriptions_amount': subs_amount}
 
 
 def subscribe_on_someone(user_name, follower_name):
-    user = User.query.filter_by(username=follower_name).first()
-    user.subscriptions += user_name + '&'
-    main.current_user.subscriptions = user.subscriptions
-    user = User.query.filter_by(username=user_name).first()
-    user.followers += follower_name + '&'
+    follower = User.query.filter_by(username=follower_name).first()
+    profile_holder = User.query.filter_by(username=user_name).first()
+    if user_name not in follower.subscriptions:
+        follower.subscriptions += user_name + '&'
+        profile_holder.followers += follower_name + '&'
+        print('has follower')
+    else:
+        print('has no one', user_name)
+        print(follower.subscriptions)
+        follower.subscriptions = follower.subscriptions.replace((user_name + '&'), '')
+        profile_holder.followers = profile_holder.followers.replace((follower_name + '&'), '')
+    main.current_user.subscriptions = follower.subscriptions
     db.session.commit()
 
 
