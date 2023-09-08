@@ -12,17 +12,33 @@
 
 {% if posts != 0 %}
     {% for post in posts %}
+
     <div class="post">
         <img class="post_img" src="{{ url_for('static', filename=post['img']) }}" alt="post.alt"/>
-        <div>
-            <p>Description</p>
-            <div>
-                <a>Comments</a>
-                <p>views amount</p> + before icon
-                <a>More info</a> + mark icon
-                <hr>
+
+        <div class="info_and_data">
+            <p class="caption">{{ post.caption }}</p>
+            <div class="info_btn_and_data">
+                <a class="description" href="">Description</a>
+                <p>{{ post['date'] }}</p>
             </div>
         </div>
+
+        <div class="views_and_likes">
+            <div class="likes">
+                <img src="{{ url_for('static', filename='img/like_empty.svg') }}" alt="like" width="34">
+                <p>amount</p>
+            </div>
+            <div class="views">
+                <p>amount</p>
+                <img src="{{ url_for('static', filename='img/views.svg') }}" alt="views" width="34">
+            </div>
+        </div>
+
+        <div class="comments">
+            <a>Comments ({{ post['comments_amount'] }})</a>
+        </div>
+
     </div>
     {% endfor %}
 {% endif %}

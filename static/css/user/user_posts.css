@@ -23,3 +23,55 @@
 .back_to_profile p {
     margin-top: 7px;
 }
+
+.info_and_data {
+    font-size: 16px;
+	font-weight: 400;
+	font-family: "Open Sans", sans-serif;
+	display: flex;
+    flex-direction: column;
+}
+
+.info_and_data p {
+	margin-bottom: 10px;
+}
+
+.views_and_likes, .info_btn_and_data {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.views, .likes {
+    display: flex;
+}
+
+.views p, .likes p {
+    margin-top: 8px;
+    font-size: 16px;
+	font-weight: 400;
+	font-family: "Open Sans", sans-serif;
+}
+
+.likes {
+    justify-content: space-right;
+}
+
+.views {
+    justify-content: space-left;
+}
+
+.likes img {
+    margin-right: 10px;
+}
+
+.views img {
+    margin-left: 10px;
+}
+
+.comments {
+    font-size: 16px;
+	font-weight: 400;
+	font-family: "Open Sans", sans-serif;
+	margin-bottom: 40px;
+}

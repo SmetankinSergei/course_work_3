@@ -77,10 +77,7 @@ def subscribe_on_someone(user_name, follower_name):
     if user_name not in follower.subscriptions:
         follower.subscriptions += user_name + '&'
         profile_holder.followers += follower_name + '&'
-        print('has follower')
     else:
-        print('has no one', user_name)
-        print(follower.subscriptions)
         follower.subscriptions = follower.subscriptions.replace((user_name + '&'), '')
         profile_holder.followers = profile_holder.followers.replace((follower_name + '&'), '')
     main.current_user.subscriptions = follower.subscriptions

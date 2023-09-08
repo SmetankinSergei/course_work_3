@@ -3,7 +3,8 @@ import json
 from flask import render_template, request
 
 import main
-from utils import get_all_posts, create_user, prepare_user_posts, subscribe_on_someone
+from post import Post
+from utils import get_all_posts, create_user, prepare_user_posts, subscribe_on_someone, load_image, send_post
 from checks import check_auth_data, check_reg_data
 from database import User
 from main import app
@@ -91,19 +92,32 @@ def user_posts(username):
     posts = User.query.filter_by(username=username).first().posts
     if posts is not None:
         posts = json.loads(posts).values()
+        print(posts)
+        for one_post in posts:
+            one_post['comments_amount'] = len(one_post['comments'])
     else:
         posts = 0
     return render_template('user/user_posts.html', user=main.current_user, username=username, posts=posts)
 
 
+# @app.route('/profile/<string:username>')
+# def profile(username):
+#     profile_holder = User.query.filter_by(username=username).first()
+#     user_links = prepare_user_posts(profile_holder)
+#     if username == main.current_user.username:
+#         return render_template('user/my_profile.html', user=main.current_user,
+#                                profile_holder=profile_holder, user_links=user_links)
+#     else:
+#         print(user_links)
+#         return render_template('user/profile.html', user=main.current_user,
+#                                profile_holder=profile_holder, user_links=user_links)
+
 @app.route('/profile/<string:username>')
 def profile(username):
     profile_holder = User.query.filter_by(username=username).first()
     user_links = prepare_user_posts(profile_holder)
+    prefix = ''
     if username == main.current_user.username:
-        return render_template('user/my_profile.html', user=main.current_user,
-                               profile_holder=profile_holder, user_links=user_links)
-    else:
-        print(user_links)
-        return render_template('user/profile.html', user=main.current_user,
-                               profile_holder=profile_holder, user_links=user_links)
+        prefix = 'my_'
+    return render_template(f'user/{prefix}profile.html', user=main.current_user,
+                           profile_holder=profile_holder, user_links=user_links)
