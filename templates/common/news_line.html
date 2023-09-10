@@ -5,6 +5,7 @@
 {% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/common/news_line.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/common/post_img.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user/user_posts.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -17,20 +18,23 @@
             </a>
             <p class="username">{{ post['username'] }}</p>
         </div>
+
         <img class="post_img" src="{{ url_for('static', filename=post['img']) }}"/>
-        <div class="post_description">
-            <p>{{ post['caption'] }}</p>
-            <div class="date_and_likes">
-                <div class="likes">
-                    <img src="{{ url_for('static', filename='img/like_empty.svg') }}" alt="like" width="34">
-                    <p>amount</p>
-                </div>
+
+        <div class="info_and_data">
+            <p class="caption">{{ post.caption }}</p>
+            <div class="views_and_data">
                 <p>{{ post['date'] }}</p>
+                <div class="views">
+                    <p>{{ post['views'] }}</p>
+                    <img src="{{ url_for('static', filename='img/views.svg') }}" alt="views" width="34">
+                </div>
             </div>
         </div>
-        <p>{{ post['full_text'] }}</p>
-        <hr>
-        <br>
+
+        <a href="/post/{{ post['username'] }}/{{ post['number'] }}">
+            <button class="full_post_btn">Show more</button>
+        </a>
     {% endfor %}
 </div>
 {% endblock %}

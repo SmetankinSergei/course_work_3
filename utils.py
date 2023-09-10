@@ -46,9 +46,12 @@ def get_all_posts():
         if user_posts is not None:
             user_posts = json.loads(user_posts)
             user_posts = user_posts.values()
+            number = 1
             for user_post in user_posts:
                 user_post['username'] = user.username
                 user_post['user_photo'] = user.user_photo
+                user_post['number'] = number
+                number += 1
                 posts.append(user_post)
     return posts
 

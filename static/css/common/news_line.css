@@ -16,26 +16,3 @@
     height: 40px;
     border-radius: 20px;
 }
-
-.date_and_likes {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    font-size: 16px;
-	font-weight: 600;
-	font-family: "Open Sans", sans-serif;
-	display: flex;
-	justify-content: space-between;
-}
-
-.likes {
-    display: flex;
-	justify-content: space-between;
-}
-
-.likes img {
-    margin-right: 10px;
-}
-
-.date_and_likes p {
-    margin-top: 7px;
-}

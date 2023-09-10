@@ -16,9 +16,8 @@
 
 {% if posts != 0 %}
     {% for post in posts %}
-
     <div class="post">
-        <img id="{{ post['img'] }}" class="post_img" src="{{ url_for('static', filename=post['img']) }}" alt="post.alt"/>
+        <img class="post_img" src="{{ url_for('static', filename=post['img']) }}" alt="post.alt"/>
 
         <div class="info_and_data">
             <p class="caption">{{ post.caption }}</p>
