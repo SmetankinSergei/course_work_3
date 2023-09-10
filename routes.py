@@ -77,9 +77,12 @@ def news_line():
     return render_template('common/news_line.html', user=main.current_user, posts=get_all_posts())
 
 
-@app.route('/post')
-def post():
-    return render_template('common/post.html')
+@app.route('/post/<string:username>/<string:post_number>')
+def post(username, post_number):
+    user = User.query.filter_by(username=username).first()
+    posts = json.loads(user.posts)
+    current_post = posts[str(post_number)]
+    return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post)
 
 
 @app.route('/create_post')
@@ -92,25 +95,12 @@ def user_posts(username):
     posts = User.query.filter_by(username=username).first().posts
     if posts is not None:
         posts = json.loads(posts).values()
-        print(posts)
         for one_post in posts:
             one_post['comments_amount'] = len(one_post['comments'])
     else:
         posts = 0
     return render_template('user/user_posts.html', user=main.current_user, username=username, posts=posts)
 
-
-# @app.route('/profile/<string:username>')
-# def profile(username):
-#     profile_holder = User.query.filter_by(username=username).first()
-#     user_links = prepare_user_posts(profile_holder)
-#     if username == main.current_user.username:
-#         return render_template('user/my_profile.html', user=main.current_user,
-#                                profile_holder=profile_holder, user_links=user_links)
-#     else:
-#         print(user_links)
-#         return render_template('user/profile.html', user=main.current_user,
-#                                profile_holder=profile_holder, user_links=user_links)
 
 @app.route('/profile/<string:username>')
 def profile(username):
@@ -121,3 +111,21 @@ def profile(username):
         prefix = 'my_'
     return render_template(f'user/{prefix}profile.html', user=main.current_user,
                            profile_holder=profile_holder, user_links=user_links)
+
+
+@app.route('/user_posts/<string:username>/<string:address>')
+def like(username, address):
+    print('like!')
+    posts = User.query.filter_by(username=username).first().posts
+    if posts is not None:
+        posts = json.loads(posts).values()
+        for one_post in posts:
+            one_post['comments_amount'] = len(one_post['comments'])
+    else:
+        posts = 0
+
+    address = address.replace("['", '').replace("']", '')
+    path = 'user/user_posts.html' + '#' + '/'.join(address.split("', '"))
+    path = 'user/user_posts.html'
+    print(path)
+    return render_template(path, user=main.current_user, username=username, posts=posts)

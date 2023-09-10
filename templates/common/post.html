@@ -3,41 +3,22 @@
 {% block title %}Post{% endblock %}
 
 {% block body %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/common/post.css') }}">
-
-<a class="back_to_profile" href="/profile/{{ username }}">
-    <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
-    <p>back to profile {{ username }}</p>
-</a>
-
-<div>
-    <img class="user_photo" src="{{ url_for('static', filename='img/icon.jpg') }}" alt="user_photo" width="64"/>
-    <p>Username</p>
-</div>
-
-<div>
-    <img class="post_photo" src="post.img" alt="post.alt"/>
-    <p>post.full_text</p>
-    <hr>
-</div>
-
-<div>
-    <a>Comments</a>
-    <p>views amount</p> + before icon
-    {% for comment in range(4) %} or while or less 4
-        <div>
-            user# comment
+    <div class="user_info">
+        <img class="profile_photo" src="{{ url_for('static', filename=current_post['user_photo']) }}"/>
+        <p class="username">{{ current_post['username'] }}</p>
+    </div>
+    <img class="news_line_post_img" src="{{ url_for('static', filename=current_post['img']) }}"/>
+    <div class="post_description">
+        <p>{{ current_post['caption'] }}</p>
+        <div class="date_and_likes">
+            <div class="likes">
+                <img src="{{ url_for('static', filename='img/like_empty.svg') }}" alt="like" width="34">
+                <p>amount</p>
+            </div>
+            <p>{{ current_post['date'] }}</p>
         </div>
-    {% endfor %}
+    </div>
+    <p>{{ current_post['full_text'] }}</p>
     <hr>
-</div>
-
-<div>
-    <form>
-        <textarea rows="1" cols="50" placeholder="username"></textarea>
-        <textarea rows="5" cols="50" placeholder="comment"></textarea>
-        <button type="submit">send</button>
-        mark label
-    </form>
-</div>
+    <br>
 {% endblock %}

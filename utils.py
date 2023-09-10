@@ -60,6 +60,10 @@ def prepare_user_posts(user):
         posts = json.loads(user.posts)
         posts_amount = len(posts.keys())
         user.posts = posts.values()
+        number = 1
+        for user_post in user.posts:
+            user_post['number'] = str(number)
+            number += 1
     if user.followers == '':
         followers_amount = 0
     else:

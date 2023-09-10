@@ -33,17 +33,18 @@
 
 <a href="/subscribe/{{ profile_holder.username }}">
     {% if profile_holder.username not in user.subscriptions %}
-        <button class="subscribe_btn" type="submit">Subscribe</button>
+        <button class="subscribe_btn" type="button">Subscribe</button>
     {% else %}
-        <button class="unsubscribe_btn" type="submit">Unsubscribe</button>
+        <button class="unsubscribe_btn" type="button">Unsubscribe</button>
     {% endif %}
 </a>
-
+<!--{'img': post['img'], 'caption': post['caption'], 'full_text': post['full_text'], 'post_date': post['post_date'], 'comments': post['comments'], 'likes': post['likes']}-->
 <div class="posts">
     {% if user_links['posts_amount'] > 0 %}
         {% for post in profile_holder.posts %}
+        {% for item in post %}{{ item }}{% endfor %}
         <div class="post">
-            <a href="/post">
+            <a href="/post/{{ profile_holder.username }}/{{ post['number'] }}">
                 <img class="post_photo" src="{{ url_for('static', filename=post['img']) }}" alt="user_post_photo"/>
             </a>
         </div>

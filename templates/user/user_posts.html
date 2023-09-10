@@ -14,19 +14,28 @@
     {% for post in posts %}
 
     <div class="post">
-        <img class="post_img" src="{{ url_for('static', filename=post['img']) }}" alt="post.alt"/>
+        <img id="{{ post['img'] }}" class="post_img" src="{{ url_for('static', filename=post['img']) }}" alt="post.alt"/>
 
         <div class="info_and_data">
             <p class="caption">{{ post.caption }}</p>
             <div class="info_btn_and_data">
-                <a class="description" href="">Description</a>
+                <button type="button" class="description">Description</button>
                 <p>{{ post['date'] }}</p>
             </div>
         </div>
 
         <div class="views_and_likes">
             <div class="likes">
-                <img src="{{ url_for('static', filename='img/like_empty.svg') }}" alt="like" width="34">
+
+                <a id="like" href="/user_posts/{{ username }}#{{ post['img'] }}">
+                    {% if user.username in post.likes %}
+                        <img src="{{ url_for('static', filename='img/like_full.svg') }}" alt="like" width="34">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='img/like_empty.svg') }}" alt="like" width="34">
+                    {% endif %}
+                </a>
+
+                <button><img src="{{ url_for('static', filename='img/like_full.svg') }}" alt="full_like"></button>
                 <p>amount</p>
             </div>
             <div class="views">
