@@ -2,23 +2,36 @@
 
 {% block title %}Post{% endblock %}
 
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/common/post.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/common/post_img.css') }}">
+{% endblock %}
+
 {% block body %}
-    <div class="user_info">
-        <img class="profile_photo" src="{{ url_for('static', filename=current_post['user_photo']) }}"/>
-        <p class="username">{{ current_post['username'] }}</p>
-    </div>
-    <img class="news_line_post_img" src="{{ url_for('static', filename=current_post['img']) }}"/>
-    <div class="post_description">
-        <p>{{ current_post['caption'] }}</p>
-        <div class="date_and_likes">
-            <div class="likes">
-                <img src="{{ url_for('static', filename='img/like_empty.svg') }}" alt="like" width="34">
-                <p>amount</p>
-            </div>
-            <p>{{ current_post['date'] }}</p>
+
+<a class="back_to_profile" href="/profile/{{ profile_holder.username }}">
+    <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
+    <p>back to profile</p>
+</a>
+
+<img class="post_img" src="{{ url_for('static', filename=current_post['img']) }}"/>
+<div class="post_description">
+    <p>{{ current_post['caption'] }}</p>
+    <div class="date_and_likes">
+        <div class="likes">
+             <a href="/like/{{ profile_holder.username }}/{{ post_number }}/{{ user.username }}">
+                {% if user.username in current_post.likes %}
+                    <img src="{{ url_for('static', filename='img/like_full.svg') }}" alt="like" width="34">
+                {% else %}
+                    <img src="{{ url_for('static', filename='img/like_empty.svg') }}" alt="like" width="34">
+                {% endif %}
+            </a>
+
+            <p>amount</p>
         </div>
+        <p>{{ current_post['date'] }}</p>
     </div>
-    <p>{{ current_post['full_text'] }}</p>
-    <hr>
-    <br>
+</div>
+<p>{{ current_post['full_text'] }}</p>
+<br>
 {% endblock %}

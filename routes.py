@@ -4,7 +4,8 @@ from flask import render_template, request
 
 import main
 from post import Post
-from utils import get_all_posts, create_user, prepare_user_posts, subscribe_on_someone, load_image, send_post
+from utils import get_all_posts, create_user, prepare_user_posts, subscribe_on_someone, load_image, send_post, \
+    like_action
 from checks import check_auth_data, check_reg_data
 from database import User
 from main import app
@@ -82,7 +83,8 @@ def post(username, post_number):
     user = User.query.filter_by(username=username).first()
     posts = json.loads(user.posts)
     current_post = posts[str(post_number)]
-    return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post)
+    return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post,
+                           post_number=post_number)
 
 
 @app.route('/create_post')
@@ -113,19 +115,10 @@ def profile(username):
                            profile_holder=profile_holder, user_links=user_links)
 
 
-@app.route('/user_posts/<string:username>/<string:address>')
-def like(username, address):
-    print('like!')
-    posts = User.query.filter_by(username=username).first().posts
-    if posts is not None:
-        posts = json.loads(posts).values()
-        for one_post in posts:
-            one_post['comments_amount'] = len(one_post['comments'])
-    else:
-        posts = 0
-
-    address = address.replace("['", '').replace("']", '')
-    path = 'user/user_posts.html' + '#' + '/'.join(address.split("', '"))
-    path = 'user/user_posts.html'
-    print(path)
-    return render_template(path, user=main.current_user, username=username, posts=posts)
+@app.route('/like/<string:username>/<string:post_number>/<string:current_user_name>')
+def like(username, post_number, current_user_name):
+    like_action(username, post_number, current_user_name)
+    user = User.query.filter_by(username=username).first()
+    posts = json.loads(user.posts)
+    current_post = posts[str(post_number)]
+    return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post)

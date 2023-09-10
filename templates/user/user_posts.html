@@ -2,8 +2,12 @@
 
 {% block title %}Posts{% endblock %}
 
-{% block body %}
+{% block style %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/user/user_posts.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/common/post_img.css') }}">
+{% endblock %}
+
+{% block body %}
 
 <a class="back_to_profile" href="/profile/{{ username }}">
     <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>

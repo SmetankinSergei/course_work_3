@@ -88,6 +88,13 @@ def subscribe_on_someone(user_name, follower_name):
     db.session.commit()
 
 
+def like_action(username, post_number, current_user_name):
+    user = User.query.filter_by(username=username).first()
+    posts = json.loads(user.posts)
+    posts[post_number]['likes'] = posts[post_number]['likes'] + current_user_name + '&'
+    user.posts = json.dumps(posts)
+    db.session.commit()
+
 # new_post = Post(load_image(), 'new photo', 'new post and photo')
 # send_post('Alina', new_post)
 
