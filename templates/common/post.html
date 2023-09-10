@@ -13,6 +13,10 @@
     <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
     <p>back to profile</p>
 </a>
+<a class="back_to_profile" href="/user_posts/{{ profile_holder.username }}">
+    <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
+    <p>to user's posts</p>
+</a>
 
 <img class="post_img" src="{{ url_for('static', filename=current_post['img']) }}"/>
 <div class="post_description">

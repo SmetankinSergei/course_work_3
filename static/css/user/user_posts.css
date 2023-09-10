@@ -27,45 +27,39 @@
 }
 
 .info_and_data p {
+    margin-top: 10px;
 	margin-bottom: 10px;
 }
 
-.views_and_likes, .info_btn_and_data {
+.views_and_data {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.views, .likes {
+.views {
     display: flex;
+    justify-content: space-left;
 }
 
-.views p, .likes p {
+.views p {
     margin-top: 8px;
     font-size: 16px;
 	font-weight: 400;
 	font-family: "Open Sans", sans-serif;
 }
 
-.likes {
-    justify-content: space-right;
-}
-
-.views {
-    justify-content: space-left;
-}
-
-.likes img {
-    margin-right: 10px;
-}
-
 .views img {
     margin-left: 10px;
 }
 
-.comments {
-    font-size: 16px;
-	font-weight: 400;
-	font-family: "Open Sans", sans-serif;
-	margin-bottom: 40px;
+.full_post_btn {
+    font-size: 20px;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    width: 100%;
+    height: 40px;
+    background: #a4e5ff;
+    border-radius: 8px;
+    margin-bottom: 40px;
 }

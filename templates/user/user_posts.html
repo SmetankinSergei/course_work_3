@@ -11,7 +11,7 @@
 
 <a class="back_to_profile" href="/profile/{{ username }}">
     <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
-    <p>back to profile</p>
+    <p>to profile</p>
 </a>
 
 {% if posts != 0 %}
@@ -22,36 +22,18 @@
 
         <div class="info_and_data">
             <p class="caption">{{ post.caption }}</p>
-            <div class="info_btn_and_data">
-                <button type="button" class="description">Description</button>
+            <div class="views_and_data">
                 <p>{{ post['date'] }}</p>
+                <div class="views">
+                    <p>{{ post['views'] }}</p>
+                    <img src="{{ url_for('static', filename='img/views.svg') }}" alt="views" width="34">
+                </div>
             </div>
         </div>
 
-        <div class="views_and_likes">
-            <div class="likes">
-
-                <a id="like" href="/user_posts/{{ username }}#{{ post['img'] }}">
-                    {% if user.username in post.likes %}
-                        <img src="{{ url_for('static', filename='img/like_full.svg') }}" alt="like" width="34">
-                    {% else %}
-                        <img src="{{ url_for('static', filename='img/like_empty.svg') }}" alt="like" width="34">
-                    {% endif %}
-                </a>
-
-                <button><img src="{{ url_for('static', filename='img/like_full.svg') }}" alt="full_like"></button>
-                <p>amount</p>
-            </div>
-            <div class="views">
-                <p>amount</p>
-                <img src="{{ url_for('static', filename='img/views.svg') }}" alt="views" width="34">
-            </div>
-        </div>
-
-        <div class="comments">
-            <a>Comments ({{ post['comments_amount'] }})</a>
-        </div>
-
+        <a href="/post/{{ username }}/{{ post['number'] }}">
+            <button class="full_post_btn">Show more</button>
+        </a>
     </div>
     {% endfor %}
 {% endif %}

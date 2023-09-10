@@ -42,7 +42,6 @@
 <div class="posts">
     {% if user_links['posts_amount'] > 0 %}
         {% for post in profile_holder.posts %}
-        {% for item in post %}{{ item }}{% endfor %}
         <div class="post">
             <a href="/post/{{ profile_holder.username }}/{{ post['number'] }}">
                 <img class="post_photo" src="{{ url_for('static', filename=post['img']) }}" alt="user_post_photo"/>

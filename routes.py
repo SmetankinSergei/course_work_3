@@ -3,9 +3,8 @@ import json
 from flask import render_template, request
 
 import main
-from post import Post
-from utils import get_all_posts, create_user, prepare_user_posts, subscribe_on_someone, load_image, send_post, \
-    like_action
+from utils import *
+
 from checks import check_auth_data, check_reg_data
 from database import User
 from main import app
@@ -82,7 +81,12 @@ def news_line():
 def post(username, post_number):
     user = User.query.filter_by(username=username).first()
     posts = json.loads(user.posts)
-    current_post = posts[str(post_number)]
+    current_post = posts[post_number]
+    current_post['views'] = current_post['views'] + 1
+    posts[post_number] = current_post
+    user.posts = json.dumps(posts)
+    db.session.commit()
+    print(current_post['views'])
     return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post,
                            post_number=post_number)
 
@@ -97,8 +101,11 @@ def user_posts(username):
     posts = User.query.filter_by(username=username).first().posts
     if posts is not None:
         posts = json.loads(posts).values()
+        number = 1
         for one_post in posts:
             one_post['comments_amount'] = len(one_post['comments'])
+            one_post['number'] = number
+            number += 1
     else:
         posts = 0
     return render_template('user/user_posts.html', user=main.current_user, username=username, posts=posts)
@@ -120,5 +127,6 @@ def like(username, post_number, current_user_name):
     like_action(username, post_number, current_user_name)
     user = User.query.filter_by(username=username).first()
     posts = json.loads(user.posts)
-    current_post = posts[str(post_number)]
-    return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post)
+    current_post = posts[post_number]
+    return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post,
+                           post_number=post_number)
