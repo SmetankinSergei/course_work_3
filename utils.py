@@ -91,7 +91,10 @@ def subscribe_on_someone(user_name, follower_name):
 def like_action(username, post_number, current_user_name):
     user = User.query.filter_by(username=username).first()
     posts = json.loads(user.posts)
-    posts[post_number]['likes'] = posts[post_number]['likes'] + current_user_name + '&'
+    if current_user_name in posts[post_number]['likes']:
+        posts[post_number]['likes'] = posts[post_number]['likes'].replace(f'{current_user_name}&', '')
+    else:
+        posts[post_number]['likes'] = posts[post_number]['likes'] + current_user_name + '&'
     user.posts = json.dumps(posts)
     db.session.commit()
 
