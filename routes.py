@@ -1,8 +1,5 @@
-import json
-
 from flask import render_template, request
 
-import main
 from utils import *
 
 from checks import check_auth_data, check_reg_data
@@ -19,7 +16,7 @@ def start():
             if check_auth_data(login, password):
                 user = User.query.filter_by(username=login).first()
                 main.current_user = user
-                user_links = prepare_user_posts(user)
+                user_links = prepare_user_links(user)
                 return render_template('user/my_profile.html', user=user, user_links=user_links,
                                        profile_holder=main.current_user)
             else:
@@ -29,7 +26,7 @@ def start():
                 create_user(login, password)
                 user = User.query.filter_by(username=login).first()
                 main.current_user = user
-                user_links = prepare_user_posts(user)
+                user_links = prepare_user_links(user)
                 return render_template('user/my_profile.html', user=user, user_links=user_links,
                                        profile_holder=main.current_user)
             else:
@@ -40,7 +37,7 @@ def start():
 
 @app.route('/my_profile')
 def my_profile():
-    user_links = prepare_user_posts(User.query.filter_by(username=main.current_user.username).first())
+    user_links = prepare_user_links(User.query.filter_by(username=main.current_user.username).first())
     return render_template('user/my_profile.html', user=main.current_user, user_links=user_links,
                            profile_holder=main.current_user)
 
@@ -68,7 +65,7 @@ def edit_profile():
 def subscribe(username):
     subscribe_on_someone(username, main.current_user.username)
     user = User.query.filter_by(username=username).first()
-    user_links = prepare_user_posts(user)
+    user_links = prepare_user_links(user)
     return render_template('user/profile.html', user=main.current_user, profile_holder=user, user_links=user_links)
 
 
@@ -83,12 +80,14 @@ def post(username, post_number):
     posts = json.loads(user.posts)
     current_post = posts[post_number]
     current_post['views'] = current_post['views'] + 1
+    likes_amount = 0
+    if current_post['likes'] != '':
+        likes_amount = len(current_post['likes'].split('&')) - 1
     posts[post_number] = current_post
     user.posts = json.dumps(posts)
     db.session.commit()
-    print(current_post['views'])
     return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post,
-                           post_number=post_number)
+                           post_number=post_number, likes_amount=likes_amount)
 
 
 @app.route('/create_post')
@@ -114,7 +113,7 @@ def user_posts(username):
 @app.route('/profile/<string:username>')
 def profile(username):
     profile_holder = User.query.filter_by(username=username).first()
-    user_links = prepare_user_posts(profile_holder)
+    user_links = prepare_user_links(profile_holder)
     prefix = ''
     if username == main.current_user.username:
         prefix = 'my_'
@@ -128,5 +127,8 @@ def like(username, post_number, current_user_name):
     user = User.query.filter_by(username=username).first()
     posts = json.loads(user.posts)
     current_post = posts[post_number]
+    likes_amount = 0
+    if current_post['likes'] != '':
+        likes_amount = len(current_post['likes'].split('&')) - 1
     return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post,
-                           post_number=post_number)
+                           post_number=post_number, likes_amount=likes_amount)

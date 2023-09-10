@@ -56,7 +56,7 @@ def get_all_posts():
     return posts
 
 
-def prepare_user_posts(user):
+def prepare_user_links(user):
     if user.posts is None:
         posts_amount = 0
     else:
