@@ -38,6 +38,14 @@ def load_image():
     return f'simple_server/img/{num}.jpg'
 
 
+def get_new_user_photo():
+    """
+    new user photo loading imitation, return path - link imitation
+    """
+    num = random.randint(1, 10)
+    return f'simple_server/users_photos/default_photo_{num}.jpg'
+
+
 def get_all_posts():
     users = User.query.all()
     posts = []
@@ -100,11 +108,6 @@ def like_action(username, post_number, current_user_name):
         posts[post_number]['likes'] = posts[post_number]['likes'] + current_user_name + '&'
     user.posts = json.dumps(posts)
     db.session.commit()
-
-
-def get_new_user_photo():
-    num = random.randint(1, 10)
-    return f'simple_server/users_photos/default_photo_{num}.jpg'
 
 # new_post = Post(load_image(), 'new photo', 'new post and photo')
 # send_post('Alina', new_post)
