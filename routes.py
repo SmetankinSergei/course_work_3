@@ -56,9 +56,13 @@ def users_list(list_name, username):
                            users=users)
 
 
-@app.route('/edit_profile')
-def edit_profile():
-    return render_template('user/edit_profile.html', user=main.current_user)
+@app.route('/edit_profile/<string:user_photo>')
+def edit_profile(user_photo):
+    print(user_photo)
+    if user_photo == 'get_new_one':
+        user_photo = get_new_user_photo().replace('/', '&&&')
+    print(user_photo)
+    return render_template('user/edit_profile.html', user=main.current_user, user_photo=user_photo)
 
 
 @app.route('/subscribe/<string:username>', methods=['GET', 'POST'])
