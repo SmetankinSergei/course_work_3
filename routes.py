@@ -48,10 +48,8 @@ def users_list(list_name, username):
 
 @app.route('/edit_profile/<string:user_photo>')
 def edit_profile(user_photo):
-    print(user_photo)
     if user_photo == 'get_new_one':
         user_photo = get_new_user_photo().replace('/', '&&&')
-    print(user_photo)
     return render_template('user/edit_profile.html', user=main.current_user, user_photo=user_photo)
 
 
