@@ -5,7 +5,7 @@
 
 <footer>
     <a href="/exit"><img class="footer_icon" src="{{ url_for('static', filename='img/footer/exit_icon.svg') }}"></a>
-    <a href="/search"><img class="footer_icon" src="{{ url_for('static', filename='img/footer/search_icon.svg') }}"></a>
+    <a href="/search/{{ 'first' }}"><img class="footer_icon" src="{{ url_for('static', filename='img/footer/search_icon.svg') }}"></a>
     <a href="/create_post/{{ 'no_photo' }}"><img class="footer_icon" src="{{ url_for('static', filename='img/footer/create_post_icon.svg') }}"></a>
     <a href="/news_line"><img class="footer_icon" src="{{ url_for('static', filename='img/footer/posts_icon.svg') }}"></a>
     <a href="/my_profile"><img class="footer_profile_photo" src="{{ url_for('static', filename=user.user_photo) }}"></a>

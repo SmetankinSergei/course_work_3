@@ -1,8 +1,10 @@
 from flask import request
 
+import main
 from checks import check_auth_data, check_reg_data
 from main import app
 from utils import *
+from utils_classes import SearchSession
 
 
 @app.route('/exit', methods=['GET', 'POST'])
@@ -129,15 +131,14 @@ def like(username, post_number, current_user_name):
                            post_number=post_number, likes_amount=likes_amount)
 
 
-@app.route('/search', methods=['GET', 'POST'])
-def search():
+@app.route('/search/<string:request_type>', methods=['GET', 'POST'])
+def search(request_type):
+    if request_type == 'first':
+        main.search_session = SearchSession()
     if request.method == 'POST':
         search_request = request.form.get('request')
         search_mode = request.form.get('mode')
-        print(search_mode)
-        if search_request == '':
-            return render_template('common/search.html', user=main.current_user, profile_holder=main.current_user)
-        result_list = get_users_list(search_request, search_mode, amount=3)
+        result_list = get_users_list(search_request, search_mode, amount=5)
         return render_template('common/search_result.html', user=main.current_user, profile_holder=main.current_user,
-                               users=result_list)
+                               search_mode=search_mode, result_list=result_list, search_session=main.search_session)
     return render_template('common/search.html', user=main.current_user, profile_holder=main.current_user)

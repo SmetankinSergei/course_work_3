@@ -3,6 +3,7 @@
 {% block title %}Edit profile{% endblock %}
 
 {% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user/users_list.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/common/search_result.css') }}">
 {% endblock %}
 
@@ -15,8 +16,28 @@
     <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
     <p>to search</p>
 </a>
+<br>
 
-{% for user in users %}
-{{ user.username }}
-{% endfor %}
+{% if search_mode == 'profiles' %}
+    <div class="users_list">
+        {% for user in result_list %}
+            <a href="/profile/{{ user.username }}">
+                <div class="list_item">
+                    <img src="{{ url_for('static', filename=user.user_photo) }}"/>
+                    <p>{{ user.username }}</p>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+
+    {% if search_session.has_more() %}
+        <a href="/search/{{ 'more' }}">
+            <button class="more_button" type="submit">More users</button>
+        </a>
+    {% endif %}
+{% endif %}
+
+{% if search_mode == 'posts' %}
+
+{% endif %}
 {% endblock %}

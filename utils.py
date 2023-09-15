@@ -8,13 +8,6 @@ from database import User, db
 
 
 def get_users_list(search_request, search_mode, amount=10):
-    """
-    get 'amount' users from base, write his names to main.users_list
-    on page with result of search - button 'more users' - again this function
-    'main.users_list = None' after quit from search result page
-
-    or! write last user id in 'main.last_user_id' and = 1 after quit from search result page
-    """
     result_list = []
     if search_mode == 'profiles':
         result_list = get_users_by_name(search_request, amount)
@@ -24,7 +17,7 @@ def get_users_list(search_request, search_mode, amount=10):
 
 
 def get_users_by_name(search_request, amount):
-    user_id = main.search_users_from_id
+    user_id = main.search_session.get_id_for_start()
     last_id = User.query.order_by(User.id.desc()).first().id
     users_list = []
     while amount > 0 and last_id >= user_id:
@@ -33,14 +26,16 @@ def get_users_by_name(search_request, amount):
         if user is None:
             continue
         elif search_request.lower() in user.username.lower():
-            print(user.username)
             users_list.append(user)
+            main.search_session.add_item(user)
             amount -= 1
     if len(users_list) > 0:
-        main.search_users_from_id = users_list[-1].id
+        main.search_session.set_id_for_start(users_list[-1].id + 1)
     else:
-        main.search_users_from_id = 1
-    return users_list
+        main.search_session.set_id_for_start(1)
+    if main.search_session.get_id_for_start() <= last_id:
+        main.search_session.set_has_more(True)
+    return main.search_session.get_items_list()
 
 
 def get_posts_by_caption(search_request, amount):
