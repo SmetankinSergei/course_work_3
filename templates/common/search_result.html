@@ -1,0 +1,22 @@
+{% extends 'authorized_base.html' %}
+
+{% block title %}Edit profile{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/common/search_result.css') }}">
+{% endblock %}
+
+{% block body %}
+<a class="back_link" href="/profile/{{ profile_holder.username }}">
+    <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
+    <p>to my profile</p>
+</a>
+<a class="back_link" href="/search">
+    <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
+    <p>to search</p>
+</a>
+
+{% for user in users %}
+{{ user.username }}
+{% endfor %}
+{% endblock %}

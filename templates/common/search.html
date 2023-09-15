@@ -7,23 +7,31 @@
 {% endblock %}
 
 {% block body %}
-<fieldset class="search_mode">
-    <legend>Select search mode:</legend>
-    <div>
-        <input type="radio" id="profiles" name="mode">
-        <label for="profiles">Profiles</label>
+<form class="auth_form" method="post">
+    <fieldset class="search_mode">
+        <legend>Select search mode:</legend>
+        <div>
+            <input type="radio" id="profiles" name="mode">
+            <label for="profiles">Profiles</label>
+        </div>
+
+        <div>
+            <input type="radio" id="posts" name="mode">
+            <label for="posts">Posts</label>
+        </div>
+    </fieldset>
+</form>
+
+<form method="post">
+    <div class="request" >
+        <input type="text" name="request" placeholder="request">
+        <a href="/search_result">
+            <button class="start_search_button" type="submit">Search</button>
+        </a>
     </div>
+</form>
 
-    <div>
-        <input type="radio" id="posts" name="mode">
-        <label for="posts">Posts</label>
-    </div>
-</fieldset>
-
-<div class="request" >
-    <input type="text" name="request" placeholder="request">
-    <button class="start_search_button" type="button">Search</button>
-</div>
-
-<button class="cancel_button" type="button">Cancel</button>
+<a  href="/profile/{{ profile_holder.username }}">
+    <button class="cancel_button" type="button">Cancel</button>
+</a>
 {% endblock %}

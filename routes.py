@@ -52,7 +52,8 @@ def users_list(list_name, username):
 def edit_profile(user_photo):
     if user_photo == 'get_new_one':
         user_photo = get_new_user_photo().replace('/', '&&&')
-    return render_template('user/edit_profile.html', user=main.current_user, user_photo=user_photo)
+    return render_template('user/edit_profile.html', user=main.current_user, profile_holder=main.current_user,
+                           user_photo=user_photo)
 
 
 @app.route('/subscribe/<string:username>', methods=['GET', 'POST'])
@@ -128,6 +129,13 @@ def like(username, post_number, current_user_name):
                            post_number=post_number, likes_amount=likes_amount)
 
 
-@app.route('/search')
+@app.route('/search', methods=['GET', 'POST'])
 def search():
-    return render_template('common/search.html', user=main.current_user)
+    if request.method == 'POST':
+        search_request = request.form.get('request')
+        if search_request == '':
+            return render_template('common/search.html', user=main.current_user, profile_holder=main.current_user)
+        users = get_users_list(search_request)
+        return render_template('common/search_result.html', user=main.current_user, profile_holder=main.current_user,
+                               users=users)
+    return render_template('common/search.html', user=main.current_user, profile_holder=main.current_user)

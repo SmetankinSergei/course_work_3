@@ -7,6 +7,33 @@ import main
 from database import User, db
 
 
+def get_users_list(search_request, amount=10):
+    """
+    get 'amount' users from base, write his names to main.users_list
+    on page with result of search - button 'more users' - again this function
+    'main.users_list = None' after quit from search result page
+
+    or! write last user id in 'main.last_user_id' and = 1 after quit from search result page
+    """
+    user_id = main.search_users_from_id
+    last_id = User.query.order_by(User.id.desc()).first().id
+    users_list = []
+    while amount > 0 and last_id >= user_id:
+        user = User.query.filter_by(id=user_id).first()
+        user_id += 1
+        if user is None:
+            continue
+        elif search_request.lower() in user.username.lower():
+            print(user.username)
+            users_list.append(user)
+            amount -= 1
+    if len(users_list) > 0:
+        main.search_users_from_id = users_list[-1].id
+    else:
+        main.search_users_from_id = 1
+    return users_list
+
+
 def show_my_profile(login):
     user = User.query.filter_by(username=login).first()
     main.current_user = user

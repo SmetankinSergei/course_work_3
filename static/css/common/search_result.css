@@ -1,0 +1,16 @@
+.back_link {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-right;
+    font-size: 24px;
+	font-weight: 600;
+	font-family: "Open Sans", sans-serif;
+}
+
+.back_link img {
+    margin-right: 10px;
+}
+
+.back_link p {
+    margin-top: 7px;
+}
