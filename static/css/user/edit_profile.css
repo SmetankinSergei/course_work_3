@@ -33,4 +33,5 @@ body, .edit_button, .cancel_button, .new_name input {
     height: 40px;
     margin-top: 10px;
     padding-left: 10px;
+    border-radius: 8px;
 }

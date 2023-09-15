@@ -1,10 +1,8 @@
-from flask import render_template, request
-
-from utils import *
+from flask import request
 
 from checks import check_auth_data, check_reg_data
-from database import User
 from main import app
+from utils import *
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -14,25 +12,17 @@ def start():
         password = request.form.get('password')
         if request.form.get('authorization') == 'authorization':
             if check_auth_data(login, password):
-                user = User.query.filter_by(username=login).first()
-                main.current_user = user
-                user_links = prepare_user_links(user)
-                return render_template('user/my_profile.html', user=user, user_links=user_links,
-                                       profile_holder=main.current_user)
+                return show_my_profile(login)
             else:
-                return render_template('common/fail_authorization.html')
+                return render_template('common/authorization.html', auth_state='fail')
         elif request.form.get('registration') == 'registration':
             if check_reg_data(login, password):
                 create_user(login, password)
-                user = User.query.filter_by(username=login).first()
-                main.current_user = user
-                user_links = prepare_user_links(user)
-                return render_template('user/my_profile.html', user=user, user_links=user_links,
-                                       profile_holder=main.current_user)
+                return show_my_profile(login)
             else:
-                return render_template('common/fail_authorization.html')
+                return render_template('common/authorization.html', auth_state='fail')
     else:
-        return render_template('common/authorization.html')
+        return render_template('common/authorization.html', auth_state='normal')
 
 
 @app.route('/my_profile')
@@ -94,9 +84,9 @@ def post(username, post_number):
                            post_number=post_number, likes_amount=likes_amount)
 
 
-@app.route('/create_post')
-def create_post():
-    return render_template('user/create_post.html')
+@app.route('/create_post/<string:photo>')
+def create_post(photo):
+    return render_template('user/create_post.html', user=main.current_user, photo=photo)
 
 
 @app.route('/user_posts/<string:username>')

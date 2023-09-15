@@ -1,8 +1,18 @@
 import json
 import random
 
+from flask import render_template
+
 import main
 from database import User, db
+
+
+def show_my_profile(login):
+    user = User.query.filter_by(username=login).first()
+    main.current_user = user
+    user_links = prepare_user_links(user)
+    return render_template('user/my_profile.html', user=user, user_links=user_links,
+                           profile_holder=main.current_user)
 
 
 def create_user(login, password):

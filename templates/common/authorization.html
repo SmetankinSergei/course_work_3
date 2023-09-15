@@ -14,5 +14,10 @@
     <button type="submit" name="registration" value="registration">registration</button>
 </form>
 
+{% if auth_state == 'fail' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/common/fail_authorization.css') }}">
+<p class="error_message">incorrect login or password</p>
+{% endif %}
+
 {% block error %}{% endblock %}
 {% endblock %}
