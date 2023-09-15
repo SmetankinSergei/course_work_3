@@ -133,9 +133,11 @@ def like(username, post_number, current_user_name):
 def search():
     if request.method == 'POST':
         search_request = request.form.get('request')
+        search_mode = request.form.get('mode')
+        print(search_mode)
         if search_request == '':
             return render_template('common/search.html', user=main.current_user, profile_holder=main.current_user)
-        users = get_users_list(search_request)
+        result_list = get_users_list(search_request, search_mode, amount=3)
         return render_template('common/search_result.html', user=main.current_user, profile_holder=main.current_user,
-                               users=users)
+                               users=result_list)
     return render_template('common/search.html', user=main.current_user, profile_holder=main.current_user)

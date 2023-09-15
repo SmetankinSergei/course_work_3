@@ -7,22 +7,20 @@
 {% endblock %}
 
 {% block body %}
-<form class="auth_form" method="post">
+<form method="post">
     <fieldset class="search_mode">
         <legend>Select search mode:</legend>
         <div>
-            <input type="radio" id="profiles" name="mode">
+            <input type="radio" id="profiles" name="mode" value="profiles" checked>
             <label for="profiles">Profiles</label>
         </div>
 
         <div>
-            <input type="radio" id="posts" name="mode">
+            <input type="radio" id="posts" name="mode" value="posts">
             <label for="posts">Posts</label>
         </div>
     </fieldset>
-</form>
 
-<form method="post">
     <div class="request" >
         <input type="text" name="request" placeholder="request">
         <a href="/search_result">

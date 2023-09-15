@@ -7,7 +7,7 @@ import main
 from database import User, db
 
 
-def get_users_list(search_request, amount=10):
+def get_users_list(search_request, search_mode, amount=10):
     """
     get 'amount' users from base, write his names to main.users_list
     on page with result of search - button 'more users' - again this function
@@ -15,6 +15,15 @@ def get_users_list(search_request, amount=10):
 
     or! write last user id in 'main.last_user_id' and = 1 after quit from search result page
     """
+    result_list = []
+    if search_mode == 'profiles':
+        result_list = get_users_by_name(search_request, amount)
+    elif search_mode == 'posts':
+        result_list = get_posts_by_caption(search_request, amount)
+    return result_list
+
+
+def get_users_by_name(search_request, amount):
     user_id = main.search_users_from_id
     last_id = User.query.order_by(User.id.desc()).first().id
     users_list = []
@@ -32,6 +41,10 @@ def get_users_list(search_request, amount=10):
     else:
         main.search_users_from_id = 1
     return users_list
+
+
+def get_posts_by_caption(search_request, amount):
+    return []
 
 
 def show_my_profile(login):
