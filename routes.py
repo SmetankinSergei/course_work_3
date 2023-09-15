@@ -5,8 +5,10 @@ from main import app
 from utils import *
 
 
+@app.route('/exit', methods=['GET', 'POST'])
 @app.route('/', methods=['GET', 'POST'])
 def start():
+    main.current_user = None
     if request.method == 'POST':
         login = request.form.get('login')
         password = request.form.get('password')
@@ -126,7 +128,6 @@ def like(username, post_number, current_user_name):
                            post_number=post_number, likes_amount=likes_amount)
 
 
-@app.route('/exit')
-def exit_profile():
-    main.current_user = None
-    return render_template('common/authorization.html', auth_state='normal')
+@app.route('/search')
+def search():
+    return render_template('common/search.html', user=main.current_user)

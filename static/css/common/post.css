@@ -15,7 +15,7 @@
     margin-top: 7px;
 }
 
-.date_and_likes {
+.post_description, .full_text {
     margin-top: 10px;
     margin-bottom: 10px;
     font-size: 16px;
