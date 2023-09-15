@@ -124,3 +124,9 @@ def like(username, post_number, current_user_name):
         likes_amount = len(current_post['likes'].split('&')) - 1
     return render_template('common/post.html', user=main.current_user, profile_holder=user, current_post=current_post,
                            post_number=post_number, likes_amount=likes_amount)
+
+
+@app.route('/exit')
+def exit_profile():
+    main.current_user = None
+    return render_template('common/authorization.html', auth_state='normal')

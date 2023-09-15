@@ -41,6 +41,10 @@ body {
     height: 31%;
 }
 
+.post img {
+    border-radius: 4px;
+}
+
 .post_photo {
     width: 100%;
     height: width;
