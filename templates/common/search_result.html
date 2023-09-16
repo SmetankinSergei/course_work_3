@@ -12,7 +12,7 @@
     <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
     <p>to my profile</p>
 </a>
-<a class="back_link" href="/search">
+<a class="back_link" href="/search/{{ 'first' }}">
     <img src="{{ url_for('static', filename='img/back_arrow.svg') }}" alt="post.alt" width="36"/>
     <p>to search</p>
 </a>
@@ -31,7 +31,7 @@
     </div>
 
     {% if search_session.has_more() %}
-        <a href="/search/{{ 'more' }}">
+        <a href="/more_items">
             <button class="more_button" type="submit">More users</button>
         </a>
     {% endif %}
@@ -39,5 +39,10 @@
 
 {% if search_mode == 'posts' %}
 
+    {% if search_session.has_more() %}
+        <a href="/more_items">
+            <button class="more_button" type="submit">More posts</button>
+        </a>
+    {% endif %}
 {% endif %}
 {% endblock %}

@@ -22,7 +22,7 @@
 <img class="post_img" src="{{ url_for('static', filename=current_post['img']) }}"/>
 
 <div class="post_description">
-    <p>{{ current_post['caption'] }}</p>
+    <p class="caption">{{ current_post['caption'] }}</p>
     <div class="date_and_likes">
         <div class="likes">
              <a href="/like/{{ profile_holder.username }}/{{ post_number }}/{{ user.username }}">

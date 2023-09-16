@@ -3,6 +3,8 @@ class SearchSession:
         self.__items = []
         self.__id_for_start = 1
         self.__has_more = False
+        self.__request_mode = ''
+        self.__search_request = ''
 
     def add_item(self, item):
         self.__items.append(item)
@@ -21,3 +23,15 @@ class SearchSession:
 
     def has_more(self):
         return self.__has_more
+
+    def set_request_mode(self, request_mode):
+        self.__request_mode = request_mode
+
+    def get_request_mode(self):
+        return self.__request_mode
+
+    def set_request(self, request):
+        self.__search_request = request
+
+    def get_request(self):
+        return self.__search_request

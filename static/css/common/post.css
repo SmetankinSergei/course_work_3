@@ -22,7 +22,12 @@
 	font-weight: 600;
 	font-family: "Open Sans", sans-serif;
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
+}
+
+.caption {
+    margin-bottom: 10px;
 }
 
 .likes {

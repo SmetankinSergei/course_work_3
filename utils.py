@@ -19,8 +19,9 @@ def get_users_list(search_request, search_mode, amount=10):
 def get_users_by_name(search_request, amount):
     user_id = main.search_session.get_id_for_start()
     last_id = User.query.order_by(User.id.desc()).first().id
+    last_valid_id = find_last_valid_id(search_request, last_id)
     users_list = []
-    while amount > 0 and last_id >= user_id:
+    while amount > 0 and last_valid_id >= user_id:
         user = User.query.filter_by(id=user_id).first()
         user_id += 1
         if user is None:
@@ -33,9 +34,21 @@ def get_users_by_name(search_request, amount):
         main.search_session.set_id_for_start(users_list[-1].id + 1)
     else:
         main.search_session.set_id_for_start(1)
-    if main.search_session.get_id_for_start() <= last_id:
+    if main.search_session.get_id_for_start() <= last_valid_id:
         main.search_session.set_has_more(True)
+    else:
+        main.search_session.set_has_more(False)
     return main.search_session.get_items_list()
+
+
+def find_last_valid_id(search_request, last_id):
+    check_id = last_id
+    while check_id > 0:
+        user = User.query.filter_by(id=check_id).first()
+        check_id -= 1
+        if search_request in user.username:
+            return user.id
+    return 0
 
 
 def get_posts_by_caption(search_request, amount):

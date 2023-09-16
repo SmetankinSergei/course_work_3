@@ -1,6 +1,5 @@
 from flask import request
 
-import main
 from checks import check_auth_data, check_reg_data
 from main import app
 from utils import *
@@ -138,7 +137,18 @@ def search(request_type):
     if request.method == 'POST':
         search_request = request.form.get('request')
         search_mode = request.form.get('mode')
-        result_list = get_users_list(search_request, search_mode, amount=5)
+        main.search_session.set_request_mode(search_mode)
+        main.search_session.set_request(search_request)
+        result_list = get_users_list(search_request, search_mode, amount=2)
         return render_template('common/search_result.html', user=main.current_user, profile_holder=main.current_user,
                                search_mode=search_mode, result_list=result_list, search_session=main.search_session)
     return render_template('common/search.html', user=main.current_user, profile_holder=main.current_user)
+
+
+@app.route('/more_items')
+def more_items():
+    search_request = main.search_session.get_request()
+    search_mode = main.search_session.get_request_mode()
+    result_list = get_users_list(search_request, search_mode, amount=2)
+    return render_template('common/search_result.html', user=main.current_user, profile_holder=main.current_user,
+                           search_mode=search_mode, result_list=result_list, search_session=main.search_session)
