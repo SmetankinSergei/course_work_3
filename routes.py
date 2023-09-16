@@ -2,6 +2,8 @@ from flask import request
 
 from checks import check_auth_data, check_reg_data
 from main import app
+from search_service import get_search_list
+from user_actions import subscribe_on_someone, like_action
 from utils import *
 from utils_classes import SearchSession
 
@@ -139,7 +141,7 @@ def search(request_type):
         search_mode = request.form.get('mode')
         main.search_session.set_request_mode(search_mode)
         main.search_session.set_request(search_request)
-        result_list = get_users_list(search_request, search_mode, amount=2)
+        result_list = get_search_list(search_request, search_mode, amount=2)
         return render_template('common/search_result.html', user=main.current_user, profile_holder=main.current_user,
                                search_mode=search_mode, result_list=result_list, search_session=main.search_session)
     return render_template('common/search.html', user=main.current_user, profile_holder=main.current_user)
@@ -149,6 +151,6 @@ def search(request_type):
 def more_items():
     search_request = main.search_session.get_request()
     search_mode = main.search_session.get_request_mode()
-    result_list = get_users_list(search_request, search_mode, amount=2)
+    result_list = get_search_list(search_request, search_mode, amount=2)
     return render_template('common/search_result.html', user=main.current_user, profile_holder=main.current_user,
                            search_mode=search_mode, result_list=result_list, search_session=main.search_session)

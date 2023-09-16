@@ -70,10 +70,8 @@
         {% endfor %}
     </div>
 
-    {% if search_session.has_more() %}
-        <a href="/more_items">
-            <button class="more_button" type="submit">More posts</button>
-        </a>
-    {% endif %}
+    <a href="/more_items">
+        <button class="more_button" type="submit">More posts</button>
+    </a>
 {% endif %}
 {% endblock %}
