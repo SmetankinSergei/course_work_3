@@ -3,6 +3,10 @@
 {% block title %}Edit profile{% endblock %}
 
 {% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/common/post_img.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/user/user_posts.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/common/news_line.css') }}">
+
 <link rel="stylesheet" href="{{ url_for('static', filename='css/user/users_list.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/common/search_result.css') }}">
 {% endblock %}
@@ -38,6 +42,33 @@
 {% endif %}
 
 {% if search_mode == 'posts' %}
+    <div class="users_list">
+        {% for post in result_list %}
+            <div class="user_info">
+                <a href="/profile/{{ post['username'] }}">
+                    <img class="profile_photo" src="{{ url_for('static', filename=post['user_photo']) }}"/>
+                </a>
+                <p class="username">{{ post['username'] }}</p>
+            </div>
+
+            <img class="post_img" src="{{ url_for('static', filename=post['img']) }}"/>
+
+            <div class="info_and_data">
+                <p class="caption">{{ post.caption }}</p>
+                <div class="views_and_data">
+                    <p>{{ post['date'] }}</p>
+                    <div class="views">
+                        <p>{{ post['views'] }}</p>
+                        <img src="{{ url_for('static', filename='img/views.svg') }}" alt="views" width="34">
+                    </div>
+                </div>
+            </div>
+
+            <a href="/post/{{ post['username'] }}/{{ post['number'] }}">
+                <button class="full_post_btn">Show more</button>
+            </a>
+        {% endfor %}
+    </div>
 
     {% if search_session.has_more() %}
         <a href="/more_items">

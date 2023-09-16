@@ -52,7 +52,15 @@ def find_last_valid_id(search_request, last_id):
 
 
 def get_posts_by_caption(search_request, amount):
-    return []
+    """
+    add to 'search_session' and check amount
+    """
+    posts = get_all_posts()
+    result_list = []
+    for post in posts:
+        if search_request in post['caption']:
+            result_list.append(post)
+    return result_list
 
 
 def show_my_profile(login):
