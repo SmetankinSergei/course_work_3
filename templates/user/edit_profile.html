@@ -9,19 +9,23 @@
 {% block body %}
 <img class="profile_photo" src="{{ url_for('static', filename=user_photo.replace('&&&', '/')) }}">
 
-<a href="/edit_profile/{{ 'get_new_one' }}">
-    <button class="ok_button" type="button">Select new image</button>
-</a>
-
-<div class="new_name">
-    <p>New name</p>
-    <input type="text" name="new_name" placeholder="new name">
-</div>
-
-<div class="buttons">
-    <a href="">
-        <button class="ok_button" type="button">Edit</button>
+<form method="post">
+    <a href="/edit_profile/{{ user_photo }}">
+        <button class="ok_button" type="submit" name="photo" value="photo">Select new image</button>
     </a>
+
+    <div class="new_name">
+        <p>New name</p>
+        <input type="text" name="new_username" placeholder="new name">
+    </div>
+    <div>
+        <a href="/edit_profile/{{ user_photo }}">
+            <button class="ok_button" type="submit" name="edit" value="edit">Edit</button>
+        </a>
+    </div>
+</form>
+
+<div>
     <a href="/profile/{{ profile_holder.username }}">
         <button class="cancel_button" type="button">Cancel</button>
     </a>

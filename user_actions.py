@@ -1,7 +1,10 @@
 import json
 
+from flask import render_template
+
 import main
 from database import User, db
+from utils import show_my_profile, prepare_user_links
 
 
 def subscribe_on_someone(user_name, follower_name):
@@ -40,3 +43,11 @@ def send_post(username, post):
     posts[post_number] = post.get_post_data()
     user.posts = json.dumps(posts)
     db.session.commit()
+
+
+def change_user_data(new_photo, current_username, new_username):
+    user = User.query.filter_by(username=current_username).first()
+    user.username = new_username
+    user.user_photo = new_photo
+    db.session.commit()
+    main.current_user = user

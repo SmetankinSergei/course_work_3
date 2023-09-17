@@ -3,7 +3,7 @@ from flask import request
 from checks import check_auth_data, check_reg_data
 from main import app
 from search_service import get_search_list
-from user_actions import subscribe_on_someone, like_action
+from user_actions import subscribe_on_someone, like_action, change_user_data
 from utils import *
 from utils_classes import SearchSession
 
@@ -51,10 +51,18 @@ def users_list(list_name, username):
                            users=users)
 
 
-@app.route('/edit_profile/<string:user_photo>')
+@app.route('/edit_profile/<string:user_photo>', methods=['GET', 'POST'])
 def edit_profile(user_photo):
-    if user_photo == 'get_new_one':
-        user_photo = get_new_user_photo().replace('/', '&&&')
+    if request.method == 'POST':
+        if request.form.get('photo') == 'photo':
+            user_photo = get_new_user_photo().replace('/', '&&&')
+            main.temp_user_photo = user_photo.replace('&&&', '/')
+        if request.form.get('edit') == 'edit':
+            if main.temp_user_photo is None:
+                main.temp_user_photo = user_photo
+            new_username = request.form.get('new_username')
+            change_user_data(main.temp_user_photo, main.current_user.username, new_username)
+            return show_my_profile(new_username)
     return render_template('user/edit_profile.html', user=main.current_user, profile_holder=main.current_user,
                            user_photo=user_photo)
 
